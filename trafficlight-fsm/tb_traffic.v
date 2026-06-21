@@ -24,6 +24,6 @@ module tb_traffic();
   		$dumpfile("dump.vcd");
       $dumpvars(0, tb_traffic);
  
-  end
+    end
   
 endmodule
