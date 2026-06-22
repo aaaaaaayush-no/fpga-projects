@@ -1,3 +1,25 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 06/21/2026 11:14:08 PM
+// Design Name: 
+// Module Name: tb_uart
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
 module tb_uart();
   
   reg clk = 0;
@@ -13,20 +35,29 @@ module tb_uart();
   
   
   initial begin
-    start = 0;
     data = 8'b10110100;
     
-    #12 start = 1;
-    #10 start = 0;
+    // Wait a bit then trigger first transmission
+    #100;
+    start = 1;
+    #10;
+    start = 0;
     
-    #150 start=1; data = 8'b11001100;
+    // Wait for first transmission to finish
+    @(negedge busy);  // waits until busy goes low
+    #200;
     
-    #20 start = 1;
-    #10 start = 0;
+    // Send second byte
+    data = 8'b11001100;
+    start = 1;
+    #10;
+    start = 0;
     
-    #300 $finish;
-
+    // Wait for second transmission to finish
+    @(negedge busy);
+    #200;
     
+    $finish;
   end
   
   initial begin
