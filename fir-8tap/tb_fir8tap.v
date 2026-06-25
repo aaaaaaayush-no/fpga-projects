@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 06/22/2026 05:23:59 PM
+// Create Date: 06/22/2026 08:04:13 PM
 // Design Name: 
-// Module Name: tb_fir
+// Module Name: tb_fir8tap
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,8 +20,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_fir();
-  reg clk=0;
+module tb_fir8tap(
+
+    );
+    reg clk=0;
   
   reg signed [7:0] x;
   
@@ -29,11 +31,11 @@ module tb_fir();
   
   always #10 clk = ~clk;
   
-  fir #(.WIDTH(8), .N(4)) dut (.clk(clk), .x(x), .y(y));
+  fir8tap #(.WIDTH(8), .N(8)) dut (.clk(clk), .x(x), .y(y));
   
   initial begin
   		$dumpfile("dump.vcd");
-    $dumpvars(0, tb_fir);
+    $dumpvars(0, tb_fir8tap);
  
   end
   
@@ -54,7 +56,8 @@ module tb_fir();
   
   end
   
-  endmodule
+  initial begin
+    $monitor("Time=%0t | x=%d | y=%d", $time, x, y);
+end
   
-  
-  
+endmodule
